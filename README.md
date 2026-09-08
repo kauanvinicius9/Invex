@@ -8,3 +8,4 @@
 - ESLint
 - Vitest
 - Cypress
+- Chart JS
