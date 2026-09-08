@@ -1,4 +1,4 @@
-Vue 3
+Vue 3  
 Nuxt 4
 TypeScript
 Pinia
