@@ -17,7 +17,7 @@ import "./index.scss"
                     acompanhe os resultados através de um dashboard
                 </p>
 
-                <NuxtLink to="/dashboard" class="home__button">
+                <NuxtLink to="/simulator" class="home__button">
                     Iniciar simulação
                 </NuxtLink>
             </div>
