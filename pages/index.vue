@@ -28,8 +28,8 @@ import "./index.scss"
                 <h2>R$ 12.000,00</h2>
 
                 <div class="home__info">
-                    <span>Rentabilidade anual</span>
-                    <strong>10%</strong>
+                    <strong>Rentabilidade anual</strong>
+                    <span>10%</span>
                 </div>
 
                 <div class="home__info">
