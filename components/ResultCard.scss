@@ -1,0 +1,19 @@
+@use '/assets/scss/variables' as *;
+
+.result-card {
+  width: 100%;
+  padding: 28px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+
+  &__header {
+    margin-bottom: 24px;
+
+    > span {
+      font-size: 12px;
+      font-weight: 600;
+      color: #099e09;
+    }
+  }
+}
