@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { InvestmentResult } from "../types/investments";
 import { computed } from "vue";
+import "./InvestmentTable.scss"
 
 const props = defineProps<{
   result: InvestmentResult
