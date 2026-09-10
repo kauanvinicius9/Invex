@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { InvestmentResult } from "../types/investments"
+import type { InvestmentResult } from "../types/investments";
+import "./ResultCard.scss";
 
 defineProps<{
   result: InvestmentResult
