@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
-import "./simulator.scss"
+import { computed, ref } from "vue";
+import "./simulator.scss";
 
 const investment = ref(12000)
 const profitability = ref(10)
