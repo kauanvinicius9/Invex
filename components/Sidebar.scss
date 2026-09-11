@@ -4,46 +4,101 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 240px;
+  z-index: 100;
+  width: 260px;
   height: 100vh;
-  background: #fff;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+  background-color: #fff;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.is-open {
+    transform: translateX(0);
+  }
 
   &__inner {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
     height: 100%;
-    padding: 32px 20px;
+    padding: 20px;
+  }
+
+  &__toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    position: absolute;
+    right: -50px;
+    top: 15px;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+
+    span {
+      display: block;
+      width: 22px;
+      height: 3px;
+      background-color: #000;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    &.is-active {
+      span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      span:nth-child(2) {
+        opacity: 0;
+      }
+      span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+    }
   }
 
   &__nav {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 8px;
+    margin-top: auto;
+    margin-bottom: auto;
 
     a {
-      display: block;
-      padding: 12px 16px;
-      color: #000;
+      display: flex;
+      align-items: center;
+      height: 44px;
+      padding: 0 16px;
+      border-radius: 8px;
+      color: #333;
       text-decoration: none;
-      transition: 0.2s ease;
+      transition: background-color 0.2s ease, color 0.2s ease;
 
       &:hover {
         color: #099e09;
       }
 
       &.router-link-active {
-        color: #000
+        color: #099e09;
       }
     }
   }
 
   &__actions {
-    display: none;
+    margin-top: 16px;
   }
 
-  &__toggle {
-    display: none;
+  &__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
   }
 }

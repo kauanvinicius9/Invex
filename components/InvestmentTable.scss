@@ -2,19 +2,15 @@
 
 .investment-table {
   width: 100%;
-  padding: 29px;
+  max-width: 1000px;
+  margin: 24px auto 0;
+  padding: 28px;
   background: #fff;
   border: 1px solid #e2e8f0;
-  border-radius: 13px;
+  border-radius: 14px;
 
   &__header {
     margin-bottom: 24px;
-  }
-
-  &__tag {
-    font-size: 12px;
-    font-weight: 700;
-    color: #099e09;
   }
 
   h2 {
@@ -36,20 +32,18 @@
 
   table {
     width: 100%;
-    min-width: 600px;
     border-collapse: collapse;
   }
 
   th,
   td {
-    padding: 16px;
+    padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid #e2e8f0;
   }
 
   th {
     font-size: 12px;
-    font-weight: 600;
     color: #64748b;
     background: #f8fafc;
   }
@@ -61,7 +55,6 @@
 
   td:nth-child(2),
   td:nth-child(3) {
-    font-weight: 600;
     color: #1e293b;
   }
 
@@ -71,29 +64,29 @@
     &:hover {
       background: #f8fafc;
     }
-
-    &:is-final {
-      background: #f0fdf4;
-
-      td {
-        font-weight: 700;
-        color: #099c09;
-      }
-    }
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
+  .investment-table {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 500px) {
   .investment-table {
     padding: 20px;
 
-    h2 {
-      font-size: 20px;
+    &__header {
+      h2 {
+        font-size: 18px;
+      } 
     }
 
     th,
     td {
-      padding: 14px 12px;
+      padding: 12px 10px;
+      font-size: 13px;
     }
   }
 }

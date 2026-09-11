@@ -15,8 +15,10 @@ const formatCurrency = (value: number) => {
 }
 
 const rows = computed(() => {
+  if (!props.result) return []
+
   return Array.from({ length: props.result.years + 1}, (_, year) => {
-    const value = props.result.initialValue = Math.pow(1 + props.result.anualProfitability / 100, year)
+    const value = props.result.initialValue * Math.pow(1 + props.result.anualProfitability / 100, year)
     return {
       year,
       value,
@@ -28,12 +30,9 @@ const rows = computed(() => {
 
 <template>
   <div class="investment-table">
+    <Sidebar />
     <div class="investment-table__header">
       <div>
-        <span class="investment-table__tag">
-          Evolução
-        </span>
-
         <h2>Projeção do investimento</h2>
 
         <p>
@@ -53,9 +52,9 @@ const rows = computed(() => {
         </thead>
 
         <tbody>
-          <tr v-for="row in rows" :key="row.year" :class="{ 'is-final': row.year === result.years }">
+          <tr v-for="row in rows" :key="row.year" :class="{ 'is-final': row.year === props.result.years }">
             <td>
-              {{ rows.year === 0 ? "Inicial" : `${rows.year}º ano` }}
+              {{ row.year === 0 ? "Inicial" : `${row.year}º ano` }}
             </td>
             
             <td>

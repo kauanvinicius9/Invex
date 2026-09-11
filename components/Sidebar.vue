@@ -13,17 +13,9 @@ const closeMenu = () => {
 </script>
 
 <template>
-  <header class="header">
+  <header class="header" :class="{ 'is-open': isMenuOpen }">
     <div class="container header__inner">
      
-      <nav class="header__nav" :class="{active: isMenuOpen }">
-        <NuxtLink to="/" @click="closeMenu">Início</NuxtLink>
-        <NuxtLink to="/dashboard" @click="closeMenu">Dashboard</NuxtLink>
-        <NuxtLink to="/investmentTable" @click="closeMenu">Evolução</NuxtLink>
-        <NuxtLink to="/resultCard" @click="closeMenu">Resultado</NuxtLink>
-        <NuxtLink to="/simulator" @click="closeMenu">Simulador</NuxtLink>
-      </nav>
-    
       <div class="header__actions">
         <button type="button" class="header__toggle" :class="{ active: isMenuOpen}" @click="toggleMenu" aria-label="Alternar menu de navegação">
           <span></span>
@@ -32,6 +24,14 @@ const closeMenu = () => {
         </button>
       </div>
 
+      <nav class="header__nav" :class="{active: isMenuOpen }">
+        <NuxtLink to="/" @click="closeMenu">Início</NuxtLink>
+        <NuxtLink to="/dashboard" @click="closeMenu">Dashboard</NuxtLink>
+        <NuxtLink to="/simulator" @click="closeMenu">Simulador</NuxtLink>
+      </nav>
+    
     </div>
   </header>
+
+  <div v-if="isMenuOpen" class="header__backdrop" @click="closeMenu"></div>
 </template>

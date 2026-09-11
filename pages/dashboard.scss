@@ -20,8 +20,8 @@
     }
 
     &__tag {
-        font-size: 14px;
-        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 16px;
         color: #9b9b9b;
     }
 
@@ -42,6 +42,7 @@
         color: #fff;
         text-decoration: none;
         transition: 0.2s;
+        cursor: pointer;
 
         &:hover {
             background: #008000;
@@ -89,11 +90,11 @@
     }
 
     &--highlight {
-        background: #099e09;
+        background: #fff;
+        border: 2px solid #099e09;
 
-        .card__label,
-        .card__value {
-            color: #fff;
+        .card__label {
+            color: #64748b;
         }
     }
 }
@@ -161,7 +162,8 @@
         width: 100%;
         min-height: 8px;
         background: #9ee69e;
-        transition: height 0.4s ease;
+        transition: height 0.8s ease;
+        transform-origin: bottom;
     }
 }
 
@@ -182,23 +184,6 @@
         
         strong {
             color: #1e293b;
-        }
-
-        &--result {
-            margin-top: 10px;
-            padding: 18px;
-            border: 0;
-            border-radius: 8px;
-            background: #e5ffeb;
-
-            span {
-                color: #475569;
-            }
-
-            strong {
-                color: #008000;
-                font-size: 18px;
-            }
         }
     }
 }

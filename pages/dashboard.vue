@@ -16,21 +16,35 @@ const formatCurrency = (value: number) => {
   }).format(value);
 };
 
-const valueYear = computed(() => {
-  return Array.from(
-    { length: years.value + 1 },
-    (_, year) => {
-      return initialValue.value * Math.pow(
-        1 + anualProfitability.value / 100,
-        year
-      )
+const chartData = computed(() => {
+  if (
+    initialValue.value === null ||
+    anualProfitability.value === null ||
+    years.value === null
+  ) {
+    return []
+  }
+
+  return Array.from({ length: years.value }, (_, index) => {
+    const year = index + 1
+
+    const value = initialValue.value * Math.pow(
+      1 + anualProfitability.value  / 100,
+      year
+    )
+
+    return {
+      year,
+      value
     }
-  )
+  })
 })
+
 </script>
 
 <template>
   <main class="dashboard">
+    <Sidebar />
     <header class="dashboard__header">
 
       <div>
@@ -39,7 +53,7 @@ const valueYear = computed(() => {
         <p>Acompanhe a evolução da sua simulação</p>
       </div>
 
-      <NuxtLink to="" class="dashboard__back"> Nova simulação </NuxtLink>
+      <NuxtLink to="/simulator" class="dashboard__back"> Nova simulação</NuxtLink>
     </header>
 
     <section class="dashboard__cards">
@@ -47,7 +61,7 @@ const valueYear = computed(() => {
         <span class="card__label"> Investimento inicial </span>
 
         <strong class="card__value">
-          {{ formatCurrency(initialValue) }}
+          {{ formatCurrency(initialValue ?? 0) }}
         </strong>
       </div>
 
@@ -84,16 +98,19 @@ const valueYear = computed(() => {
         </div>
 
         <div class="chart">
-          <div v-for="(value, year) in valueYear" :key="year" class="chart__item">
+          <div v-for="item in chartData" :key="item.year" class="chart__item">
             <div class="chart__bar-container">
-              <div class="chart__bar" :style="{height: `${(value / finalValue) * 100}%`}"></div>
+              <div class="chart__bar" :style="{height: finalValue > 0 
+                                                                              ? `${(item.value / finalValue) * 100}%`
+                                                                              : '0%'}">
+                </div>
             </div>
 
             <strong>
-              {{ formatCurrency(value) }}
+              {{ formatCurrency(item.value) }}
             </strong>
 
-            <span> Ano {{ year }} </span>
+            <span> Ano {{ item.year }} </span>
           </div>
         </div>
       </div>
@@ -111,7 +128,7 @@ const valueYear = computed(() => {
             <span> Valor investido </span>
 
             <strong>
-              {{ formatCurrency(initialValue) }}
+              {{ formatCurrency(initialValue ?? 0) }}
             </strong>
           </div>
 
@@ -125,15 +142,16 @@ const valueYear = computed(() => {
             <strong> {{ anualProfitability }}% </strong>
           </div>
 
-          <div class="summary__item summary__item--result">
+          <div class="summary__item">
             <span> Valor estimado </span>
-
-            <strong>
-              {{ formatCurrency(finalValue) }}
-            </strong>
+            <strong> {{ formatCurrency(finalValue) }} </strong>
           </div>
         </div>
       </div>
     </section>
   </main>
+
+  <footer>
+    <Footer/>
+  </footer>
 </template>

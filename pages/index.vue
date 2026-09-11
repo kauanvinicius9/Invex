@@ -4,6 +4,7 @@ import "./index.scss";
 
 <template>
     <main class="home">
+        <Sidebar />
         <section class="home__hero">
             <div class="home__content">
                 <span class="home__tag">Invex - Simule seus Investimentos</span>
@@ -44,4 +45,8 @@ import "./index.scss";
             </div>
         </section>
     </main>
+
+    <footer>
+      <Footer/>
+    </footer>
 </template>
