@@ -1,1 +1,49 @@
 @use '/assets/scss/variables' as *;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100%;
+    padding: 32px 20px;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    a {
+      display: block;
+      padding: 12px 16px;
+      color: #000;
+      text-decoration: none;
+      transition: 0.2s ease;
+
+      &:hover {
+        color: #099e09;
+      }
+
+      &.router-link-active {
+        color: #000
+      }
+    }
+  }
+
+  &__actions {
+    display: none;
+  }
+
+  &__toggle {
+    display: none;
+  }
+}
