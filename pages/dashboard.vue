@@ -100,10 +100,7 @@ const chartData = computed(() => {
         <div class="chart">
           <div v-for="item in chartData" :key="item.year" class="chart__item">
             <div class="chart__bar-container">
-              <div class="chart__bar" :style="{height: finalValue > 0 
-                                                                              ? `${(item.value / finalValue) * 100}%`
-                                                                              : '0%'}">
-                </div>
+              <div class="chart__bar" :style="{height: finalValue > 0 ? `${(item.value / finalValue) * 100}%` : '0%'}"></div>
             </div>
 
             <strong>
