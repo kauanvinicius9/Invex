@@ -63,7 +63,7 @@ const formatCurrency = (value: number) => {
               <span>R$</span>
 
               <input id="initialValue" type="number" min="0" max="10000" v-model.number="initialValue"
-                            @input="initialValue = initialValue === null ? null : Math.floor(Math.min(10000, Math.max(0, initialValue)))"/>
+                    @input="initialValue = initialValue === null ? null : Math.floor(Math.min(10000, Math.max(0, initialValue)))"/>
           </div>
         </div>
 
@@ -86,7 +86,7 @@ const formatCurrency = (value: number) => {
 
             <div class="input-wrapper">
               <input id="years" type="number" min="1" max="100" v-model.number="years"
-                            @input="years = years === null ? null : Math.floor(Math.min(100, Math.max(1, years)))"/>
+                    @input="years = years === null ? null : Math.floor(Math.min(100, Math.max(1, years)))"/>
               <span>anos</span>
             </div>
           </div>
