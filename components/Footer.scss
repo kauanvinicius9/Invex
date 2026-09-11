@@ -1,1 +1,28 @@
 @use '/assets/scss/variables' as *;
+
+.footer {
+  width: 100%;
+  padding: 24px 0;
+  background: #fff;
+  border-top: 1px solid #8c8c8c;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+
+  &__inner {
+    display: flex;
+    align-items: center;
+  }
+
+  &__copy {
+    margin: 0;
+    color: #0e0e0e;
+    font-size: 0.086rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    &__inner {
+      font-size: 0.080rem;
+    }
+  }
+}
