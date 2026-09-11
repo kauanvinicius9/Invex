@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import "./Sidebar.scss";
 
 const isMenuOpen = ref(false)
 const toggleMenu = () => {
