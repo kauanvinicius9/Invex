@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import "./simulator.scss";
 
-const investment = ref(12000)
-const profitability = ref(10)
-const years = ref(5)
+import { computed } from "vue"
+import "./simulator.scss"
+
+const {
+  initialValue,
+  anualProfitability,
+  years
+} = useSimulator()
 
 const finalValue = computed(() => {
-  return investment.value * Math.pow(
-    1 + profitability.value / 100,
+  return initialValue.value * Math.pow(
+    1 + anualProfitability.value / 100,
     years.value
   )
 })
 
 const profit = computed(() => {
-  return finalValue.value - investment.value
+  return finalValue.value - initialValue.value
 })
 
 const formatCurrency = (value: number) => {
@@ -23,6 +26,7 @@ const formatCurrency = (value: number) => {
     currency: "BRL"
   }).format(value)
 }
+
 </script>
 
 <template>
@@ -55,14 +59,15 @@ const formatCurrency = (value: number) => {
         <div class="form">
 
           <div class="form__group">
-            <label for="investment">
-              Valor inicial
+            <label for="initialValue">
+              Valor inicial (Máx. 10.000,00)
             </label>
 
             <div class="input-wrapper">
               <span>R$</span>
 
-              <input id="investment" v-model.number="investment" type="number" min="0"/>
+              <input id="initialValue" type="number" min="0" max="100" 
+                          @input="initialValue = Math.min(10000, Number(initialValue))"/>
             </div>
           </div>
 
@@ -72,7 +77,8 @@ const formatCurrency = (value: number) => {
             </label>
 
             <div class="input-wrapper">
-              <input id="profitability" v-model.number="profitability" type="number" min="0" step="0.1"/>
+              <input id="profitability" type="number" min="0" max="100" 
+                          @input="anualProfitability = Math.min(100, Number(anualProfitability))"step="0.1"/>
               <span>%</span>
             </div>
           </div>
@@ -83,7 +89,7 @@ const formatCurrency = (value: number) => {
             </label>
 
             <div class="input-wrapper">
-              <input id="years" v-model.number="years" type="number" min="1"/>
+              <input id="years" type="number" min="1" max="100" @input="years = Math.min(100, Number(years))"/>
               <span>anos</span>
             </div>
           </div>
@@ -112,7 +118,7 @@ const formatCurrency = (value: number) => {
             <div>
               <span>Valor investido</span>
               <strong>
-                {{ formatCurrency(investment) }}
+                {{ formatCurrency(initialValue) }}
               </strong>
             </div>
 
@@ -126,7 +132,7 @@ const formatCurrency = (value: number) => {
             <div>
               <span>Rentabilidade</span>
               <strong>
-                {{ profitability }}% ao ano
+                {{ anualProfitability }}% ao ano
               </strong>
             </div>
 

@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import "./dashboard.scss";
 
-const startInvestment = 12000;
-const anualProfitability = 10;
-const years = 5;
-
-const finalValue =
-  startInvestment * Math.pow(1 + anualProfitability / 100, years);
-
-const rendimento = finalValue - startInvestment;
+const {
+  initialValue,
+  anualProfitability,
+  years,
+  finalValue,
+  profit
+} = useSimulator()
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat("pt-BR", {
@@ -17,9 +16,17 @@ const formatCurrency = (value: number) => {
   }).format(value);
 };
 
-const valueYear = Array.from({ length: years + 1 }, (_, year) => {
-  return startInvestment * Math.pow(1 + anualProfitability / 100, year);
-});
+const valueYear = computed(() => {
+  return Array.from(
+    { length: years.value + 1 },
+    (_, year) => {
+      return initialValue.value * Math.pow(
+        1 + anualProfitability.value / 100,
+        year
+      )
+    }
+  )
+})
 </script>
 
 <template>
@@ -40,7 +47,7 @@ const valueYear = Array.from({ length: years + 1 }, (_, year) => {
         <span class="card__label"> Investimento inicial </span>
 
         <strong class="card__value">
-          {{ formatCurrency(startInvestment) }}
+          {{ formatCurrency(initialValue) }}
         </strong>
       </div>
 
@@ -53,7 +60,7 @@ const valueYear = Array.from({ length: years + 1 }, (_, year) => {
         <span class="card__label"> Rendimento </span>
 
         <strong class="card__value card__value--profit">
-          {{ formatCurrency(rendimento) }}
+          {{ formatCurrency(profit) }}
         </strong>
       </div>
 
@@ -104,7 +111,7 @@ const valueYear = Array.from({ length: years + 1 }, (_, year) => {
             <span> Valor investido </span>
 
             <strong>
-              {{ formatCurrency(startInvestment) }}
+              {{ formatCurrency(initialValue) }}
             </strong>
           </div>
 

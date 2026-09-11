@@ -25,7 +25,7 @@ import "./index.scss";
             <div class="home__card">
                 <p>Exemplo de investimento</p>
 
-                <h2>R$ 12.000,00</h2>
+                <h2>R$ 10.000,00</h2>
 
                 <div class="home__info">
                     <strong>Rentabilidade anual</strong>
@@ -39,7 +39,7 @@ import "./index.scss";
 
                 <div class="home__info">
                     <strong>Valor estimado</strong>
-                    <span>R$ 19.326,12</span>
+                    <span>R$ 16.105,10</span>
                 </div>
             </div>
         </section>
