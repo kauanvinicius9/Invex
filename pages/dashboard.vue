@@ -16,6 +16,18 @@ const formatCurrency = (value: number) => {
   }).format(value);
 };
 
+const formatCompactCurrency = (value: number) => {
+  if (value >= 1e9) {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      notation: "compact",
+      maximumFractionDigits: 2
+    }).format(value);
+  }
+  return formatCurrency(value);
+};
+
 const chartData = computed(() => {
   if (
     initialValue.value === null ||
@@ -29,7 +41,7 @@ const chartData = computed(() => {
     const year = index + 1
 
     const value = initialValue.value * Math.pow(
-      1 + anualProfitability.value  / 100,
+      1 + anualProfitability.value / 100,
       year
     )
 
@@ -39,14 +51,11 @@ const chartData = computed(() => {
     }
   })
 })
-
 </script>
 
 <template>
   <main class="dashboard">
-    <Sidebar />
     <header class="dashboard__header">
-
       <div>
         <span class="dashboard__tag"> Dashboard </span>
         <h1>Seus investimentos</h1>
@@ -59,9 +68,8 @@ const chartData = computed(() => {
     <section class="dashboard__cards">
       <div class="card">
         <span class="card__label"> Investimento inicial </span>
-
-        <strong class="card__value">
-          {{ formatCurrency(initialValue ?? 0) }}
+        <strong class="card__value" :title="formatCurrency(initialValue ?? 0)">
+          {{ formatCompactCurrency(initialValue ?? 0) }}
         </strong>
       </div>
 
@@ -72,17 +80,15 @@ const chartData = computed(() => {
 
       <div class="card">
         <span class="card__label"> Rendimento </span>
-
-        <strong class="card__value card__value--profit">
-          {{ formatCurrency(profit) }}
+        <strong class="card__value card__value--profit" :title="formatCurrency(profit)">
+          {{ formatCompactCurrency(profit) }}
         </strong>
       </div>
 
       <div class="card card--highlight">
         <span class="card__label"> Patrimônio final </span>
-
-        <strong class="card__value">
-          {{ formatCurrency(finalValue) }}
+        <strong class="card__value" :title="formatCurrency(finalValue)">
+          {{ formatCompactCurrency(finalValue) }}
         </strong>
       </div>
     </section>
@@ -90,24 +96,26 @@ const chartData = computed(() => {
     <section class="dashboard__content">
       <div class="panel">
         <div class="panel__header">
-
           <div>
             <h2>Evolução do investimento</h2>
             <p>Projeção para {{ years }} anos</p>
           </div>
         </div>
 
-        <div class="chart">
-          <div v-for="item in chartData" :key="item.year" class="chart__item">
-            <div class="chart__bar-container">
-              <div class="chart__bar" :style="{height: finalValue > 0 ? `${(item.value / finalValue) * 100}%` : '0%'}"></div>
+        <!-- Container do gráfico com barra de rolagem quando houver muitos anos -->
+        <div class="chart-scroll-wrapper">
+          <div class="chart">
+            <div v-for="item in chartData" :key="item.year" class="chart__item">
+              <div class="chart__bar-container">
+                <div class="chart__bar" :style="{height: finalValue > 0 ? `${Math.max((item.value / finalValue) * 100, 2)}%` : '0%'}"></div>
+              </div>
+
+              <strong :title="formatCurrency(item.value)">
+                {{ formatCompactCurrency(item.value) }}
+              </strong>
+
+              <span> Ano {{ item.year }} </span>
             </div>
-
-            <strong>
-              {{ formatCurrency(item.value) }}
-            </strong>
-
-            <span> Ano {{ item.year }} </span>
           </div>
         </div>
       </div>
@@ -123,9 +131,8 @@ const chartData = computed(() => {
         <div class="summary">
           <div class="summary__item">
             <span> Valor investido </span>
-
-            <strong>
-              {{ formatCurrency(initialValue ?? 0) }}
+            <strong :title="formatCurrency(initialValue ?? 0)">
+              {{ formatCompactCurrency(initialValue ?? 0) }}
             </strong>
           </div>
 
@@ -139,9 +146,11 @@ const chartData = computed(() => {
             <strong> {{ anualProfitability }}% </strong>
           </div>
 
-          <div class="summary__item">
+          <div class="summary__item summary__item--highlight">
             <span> Valor estimado </span>
-            <strong> {{ formatCurrency(finalValue) }} </strong>
+            <strong :title="formatCurrency(finalValue)">
+              {{ formatCompactCurrency(finalValue) }}
+            </strong>
           </div>
         </div>
       </div>

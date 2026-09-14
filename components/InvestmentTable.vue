@@ -30,7 +30,6 @@ const rows = computed(() => {
 
 <template>
   <div class="investment-table">
-    <Sidebar />
     <div class="investment-table__header">
       <div>
         <h2>Projeção do investimento</h2>

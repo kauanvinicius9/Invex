@@ -1,6 +1,8 @@
 @use '/assets/scss/variables' as *;
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   font-family: $font;
 }
@@ -10,9 +12,14 @@
   padding: 40px;
   background: #f5f7fb;
   color: #1e293b; 
+  overflow-x: hidden;
 
   &__table-section {
     margin-top: 20px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 0;
   }
 
   &__header {
@@ -32,7 +39,7 @@
 
   h1 {
     margin: 8px 0;
-    font-size: 36px;
+    font-size: clamp(26px, 4vw, 36px);
   }
 
   &__header p {
@@ -43,6 +50,7 @@
   &__buttons {
     display: flex;
     gap: 10px;
+    flex-shrink: 0;
   }
 
   &__back {
@@ -54,6 +62,7 @@
     color: white;
     text-decoration: none;
     transition: 0.2s;
+    white-space: nowrap;
 
     &:hover {
       background: #008000;
@@ -70,6 +79,7 @@
     color: #099e09;
     text-decoration: none;
     transition: 0.2s;
+    white-space: nowrap;
 
     &:hover {
       background: #008000;
@@ -84,6 +94,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
+    min-width: 0; 
   }
 }
 
@@ -93,13 +104,14 @@
   background: #fff;
   border: 1px solid #e2e8f0;
   border-radius: 14px;
+  overflow: hidden;
 
   &__header {
     margin-bottom: 28px;
 
     h2 {
       margin: 0 0 6px;
-      font-size: 21px;
+      font-size: 20px;
     }
 
     p {
@@ -174,6 +186,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    min-width: 0;
 
     span {
       font-size: 14px;
@@ -181,8 +194,12 @@
     }
 
     strong {
-      font-size: 30px;
+      font-size: clamp(20px, 2.5vw, 30px);
       color: #000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; 
+      display: block;
     }
   }
 
@@ -197,15 +214,21 @@
       align-items: center;
       gap: 16px;
       border-bottom: 1px solid #e2e8f0;
+      min-width: 0;
 
       span {
         color: #64748b;
         font-size: 14px;
+        flex-shrink: 0;
       }
 
       strong {
         text-align: right;
         color: #1e293b;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 60%; 
       }
     }
   }
@@ -213,7 +236,7 @@
 
 @media (max-width: 800px) {
   .simulator {
-    padding: 24px;
+    padding: 24px 16px;
 
     &__content {
       grid-template-columns: 1fr;
@@ -227,33 +250,20 @@
 }
 
 @media (max-width: 500px) {
-  .simulator {
-    padding: 16px;
-
-    h1 {
-      font-size: 28px;
-    }
-  }
-
   .panel {
-    padding: 20px;
+    padding: 18px;
   }
 
   .result {
-    &__main {
-      strong {
-        font-size: 25px;
-      }
-    }
-
     &__details {
       > div {
         align-items: flex-start;
         flex-direction: column;
-        gap: 5px;
+        gap: 4px;
 
         strong {
           text-align: left;
+          max-width: 100%;
         }
       }
     }
