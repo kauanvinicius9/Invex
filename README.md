@@ -4,6 +4,17 @@ Invex is a **Front-End** project developed with `Vue` + `Nuxt`. Its purpose is t
 
 ---
 
+- **Flexible Interest Calculations:** Switch seamlessly between **Compound Interest** and **Simple Interest** models, backed by precise business logic;
+- **Interactive Growth Dashboard:** Dynamic multi-line chart powered by `Chart.js` and `vue-chartjs`, visualizing timeline growth, total contributions, and interest accumulated over time with instant currency formatting (`BRL`);
+- **Scenario Comparison Tool:** Compare multiple investment strategies side-by-side in a comparative table with automatic highlighting for top-performing scenarios and delta profit calculations;
+- **Reactive State Management:** Global state synchronization across inputs, dashboards, and comparison tools using Nuxt's `useState` composables.
+
+---
+
+```powershell
+npm install chart.js vue-chart.js
+```
+
 <div align="left">
   <img src="https://skillicons.dev/icons?i=vue" height="65" alt="vuejs logo" title="Vue" />
   <img src="https://skillicons.dev/icons?i=nuxtjs" height="65" alt="nuxtjs logo" title="Nuxt" />
