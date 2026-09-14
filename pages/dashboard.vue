@@ -38,13 +38,17 @@ const chartData = computed(() => {
     return []
   }
 
+  const P = initialValue.value;
+  const rate = anualProfitability.value / 100;
+
+
   return Array.from({ length: years.value }, (_, index) => {
     const year = index + 1
     const rate = anualProfitability.value! / 100
 
     const value = interestType.value === "simple"
-      ? initialValue.value! * (1 + rate * year)
-      : initialValue.value! * Math.pow(1 + rate, year)
+      ? P * (1 + rate * year)
+      : P * Math.pow(1 + rate, year)
 
     return {
       year,
@@ -104,7 +108,7 @@ const chartData = computed(() => {
         </div>
 
         <div class="chart-scroll-wrapper">
-          <div class="chart">
+          <div class="chart" :key="interestType">
             <div v-for="item in chartData" :key="item.year" class="chart__item">
               <div class="chart__bar-container">
                 <div class="chart__bar" :style="{height: finalValue > 0 ? `${Math.max((item.value / finalValue) * 100, 2)}%` : '0%'}"></div>
