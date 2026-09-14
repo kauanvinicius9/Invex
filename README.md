@@ -9,4 +9,5 @@ Invex is a **Front-End** project developed with `Vue` + `Nuxt`. Its purpose is t
   <img src="https://skillicons.dev/icons?i=nuxtjs" height="65" alt="nuxtjs logo" title="Nuxt" />
   <img src="https://skillicons.dev/icons?i=sass" height="65" alt="sass logo" title="SCSS" />
   <img src="https://skillicons.dev/icons?i=ts" height="65" alt="typescript logo" title="TypeScript" />
+  <img src="https://skillicons.dev/icons?i=vitest" height="65" alt="vitest logo" title="Vitest" />
 </div>
