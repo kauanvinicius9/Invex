@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import "./dashboard.scss";
+import GrowthChart from "~/components/dashboard/GrowthChart.vue";
 
 const {
   initialValue,
+  monthlyValue,
   anualProfitability,
   years,
   interestType,
   finalValue,
   profit
-} = useSimulator()
+} = useSimulator();
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat("pt-BR", {
@@ -29,33 +31,40 @@ const formatCompactCurrency = (value: number) => {
   return formatCurrency(value);
 };
 
-const chartData = computed(() => {
-  if (
-    initialValue.value === null ||
-    anualProfitability.value === null ||
-    years.value === null
-  ) {
-    return []
+const simulacaoTimeline = computed(() => {
+  const p = initialValue.value ?? 0;
+  const pMensal = monthlyValue?.value ?? 0;
+  const taxaAnual = anualProfitability.value ?? 0;
+  const totalAnos = years.value ?? 0;
+
+  if (p === 0 || totalAnos === 0) return [];
+
+  const taxaMensal = Math.pow(1 + taxaAnual / 100, 1 / 12) - 1;
+  const totalMeses = totalAnos * 12;
+
+  let montante = p;
+  let investido = p;
+
+  const dados = [];
+
+  for (let mes = 1; mes <= totalMeses; mes++) {
+    if (interestType.value === "simple") {
+      investido += pMensal;
+      montante = p + (p * (taxaAnual / 100) * (mes / 12)) + (investido - p);
+    } else {
+      montante = (montante + pMensal) * (1 + taxaMensal);
+      investido += pMensal;
+    }
+
+    dados.push({
+      periodo: mes,
+      totalInvestido: Number(investido.toFixed(2)),
+      totalAcumulado: Number(montante.toFixed(2))
+    });
   }
 
-  const P = initialValue.value;
-  const rate = anualProfitability.value / 100;
-
-
-  return Array.from({ length: years.value }, (_, index) => {
-    const year = index + 1
-    const rate = anualProfitability.value! / 100
-
-    const value = interestType.value === "simple"
-      ? P * (1 + rate * year)
-      : P * Math.pow(1 + rate, year)
-
-    return {
-      year,
-      value
-    }
-  })
-})
+  return dados;
+});
 </script>
 
 <template>
@@ -67,7 +76,7 @@ const chartData = computed(() => {
         <p>Acompanhe a evolução da sua simulação</p>
       </div>
 
-      <NuxtLink to="/simulator" class="dashboard__back"> Nova simulação</NuxtLink>
+      <NuxtLink to="/simulator" class="dashboard__back">Nova simulação</NuxtLink>
     </header>
 
     <section class="dashboard__cards">
@@ -80,7 +89,7 @@ const chartData = computed(() => {
 
       <div class="card">
         <span class="card__label">Rentabilidade anual</span>
-        <strong class="card__value"> {{ anualProfitability }}% </strong>
+        <strong class="card__value">{{ anualProfitability }}%</strong>
       </div>
 
       <div class="card">
@@ -107,20 +116,8 @@ const chartData = computed(() => {
           </div>
         </div>
 
-        <div class="chart-scroll-wrapper">
-          <div class="chart" :key="interestType">
-            <div v-for="item in chartData" :key="item.year" class="chart__item">
-              <div class="chart__bar-container">
-                <div class="chart__bar" :style="{height: finalValue > 0 ? `${Math.max((item.value / finalValue) * 100, 2)}%` : '0%'}"></div>
-              </div>
-
-              <strong :title="formatCurrency(item.value)">
-                {{ formatCompactCurrency(item.value) }}
-              </strong>
-
-              <span> Ano {{ item.year }} </span>
-            </div>
-          </div>
+        <div class="panel__chart">
+          <GrowthChart :timeline-data="simulacaoTimeline" />
         </div>
       </div>
 
@@ -147,12 +144,12 @@ const chartData = computed(() => {
 
           <div class="summary__item">
             <span>Prazo</span>
-            <strong> {{ years }} anos </strong>
+            <strong>{{ years }} anos</strong>
           </div>
 
           <div class="summary__item">
             <span>Taxa anual</span>
-            <strong> {{ anualProfitability }}% </strong>
+            <strong>{{ anualProfitability }}%</strong>
           </div>
 
           <div class="summary__item summary__item--highlight">
@@ -167,6 +164,6 @@ const chartData = computed(() => {
   </main>
 
   <footer>
-    <Footer/>
+    <Footer />
   </footer>
 </template>
