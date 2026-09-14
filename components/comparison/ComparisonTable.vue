@@ -6,6 +6,11 @@ const props = defineProps<{
     summary: ComparisonSummary | null;
 }>();
 
+const emit = defineEmits<{
+    (e: "duplicate", id: string): void;
+    (e: "remove", id: string): void;
+}>();
+
 const formatCurrency = (val: number) => {
     return new Intl.NumberFormat("pt-BR", {
         style: "currency",

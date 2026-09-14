@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import "./dashboard.scss";
-import GrowthChart from "~/components/dashboard/GrowthChart.vue";
+import GrowthChart from "../components/dashboard/GrowthChart.vue";
+import { computed } from "vue";
+import ComparisonTable from "~/components/comparison/ComparisonTable.vue";
 
 const {
   initialValue,
@@ -11,6 +13,12 @@ const {
   finalValue,
   profit
 } = useSimulator();
+
+const {
+  comparisonSummary,
+  removeScenario,
+  duplicateScenario
+} = useComparison();
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat("pt-BR", {
@@ -33,7 +41,7 @@ const formatCompactCurrency = (value: number) => {
 
 const simulacaoTimeline = computed(() => {
   const p = initialValue.value ?? 0;
-  const pMensal = monthlyValue?.value ?? 0;
+  const pMensal = monthlyValue ? (monthlyValue.value ?? 0) : 0;
   const taxaAnual = anualProfitability.value ?? 0;
   const totalAnos = years.value ?? 0;
 
@@ -159,6 +167,19 @@ const simulacaoTimeline = computed(() => {
             </strong>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="dashboard__comparison" v-if="comparisonSummary">
+      <div class="panel">
+        <div class="panel__header">
+          <div>
+            <h2>Comparativo de Cenários</h2>
+            <p>Análise lado a lado das suas simulações</p>
+          </div>
+        </div>
+
+        <ComparisonTable :summary="comparisonSummary" @remove="removeScenario" @duplicate="duplicateScenario"/>
       </div>
     </section>
   </main>

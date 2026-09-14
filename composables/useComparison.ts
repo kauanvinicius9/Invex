@@ -75,13 +75,14 @@ export function useComparison() {
     const updateScenario = (id: string, updateFields: Partial<ScenarioInput>) => {
         const index = scenarios.value.findIndex((s) => s.id === id);
         if (index !== -1) {
-            scenarios.value[index] = { ...scenarios.value[index], ...updatedFields };
+            scenarios.value[index] = { ...scenarios.value[index], ...updateFields };
         }
     };
 
     return {
         scenarios,
-        calculatedResults,
+        calculateResults,
+        removeScenario,
         comparisonSummary,
         addScenario,
         duplicateScenario,

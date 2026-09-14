@@ -10,4 +10,5 @@ export interface InvestmentResult {
   years: number;
   finalValue: number;
   profit: number;
+  interestType?: "compound" | "simple";
 }
