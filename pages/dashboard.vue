@@ -58,7 +58,7 @@ const chartData = computed(() => {
   <main class="dashboard">
     <header class="dashboard__header">
       <div>
-        <span class="dashboard__tag"> Dashboard </span>
+        <span class="dashboard__tag">Dashboard</span>
         <h1>Seus investimentos</h1>
         <p>Acompanhe a evolução da sua simulação</p>
       </div>
@@ -68,26 +68,26 @@ const chartData = computed(() => {
 
     <section class="dashboard__cards">
       <div class="card">
-        <span class="card__label"> Investimento inicial </span>
+        <span class="card__label">Investimento inicial</span>
         <strong class="card__value" :title="formatCurrency(initialValue ?? 0)">
           {{ formatCompactCurrency(initialValue ?? 0) }}
         </strong>
       </div>
 
       <div class="card">
-        <span class="card__label"> Rentabilidade anual </span>
+        <span class="card__label">Rentabilidade anual</span>
         <strong class="card__value"> {{ anualProfitability }}% </strong>
       </div>
 
       <div class="card">
-        <span class="card__label"> Rendimento </span>
+        <span class="card__label">Rendimento</span>
         <strong class="card__value card__value--profit" :title="formatCurrency(profit)">
           {{ formatCompactCurrency(profit) }}
         </strong>
       </div>
 
       <div class="card card--highlight">
-        <span class="card__label"> Patrimônio final </span>
+        <span class="card__label">Patrimônio final</span>
         <strong class="card__value" :title="formatCurrency(finalValue)">
           {{ formatCompactCurrency(finalValue) }}
         </strong>
@@ -99,11 +99,10 @@ const chartData = computed(() => {
         <div class="panel__header">
           <div>
             <h2>Evolução do investimento</h2>
-            <p>Projeção para {{ years }} anos</p>
+            <p>Projeção para {{ years }} anos ({{ interestType === "simple" ? "Juros simples" : "Juros compostos" }})</p>
           </div>
         </div>
 
-        <!-- Container do gráfico com barra de rolagem quando houver muitos anos -->
         <div class="chart-scroll-wrapper">
           <div class="chart">
             <div v-for="item in chartData" :key="item.year" class="chart__item">
@@ -131,24 +130,29 @@ const chartData = computed(() => {
 
         <div class="summary">
           <div class="summary__item">
-            <span> Valor investido </span>
+            <span>Tipo de juros</span>
+            <strong>{{ interestType === "simple" ? "Simples" : "Compostos" }}</strong>
+          </div>
+
+          <div class="summary__item">
+            <span>Valor investido</span>
             <strong :title="formatCurrency(initialValue ?? 0)">
               {{ formatCompactCurrency(initialValue ?? 0) }}
             </strong>
           </div>
 
           <div class="summary__item">
-            <span> Prazo </span>
+            <span>Prazo</span>
             <strong> {{ years }} anos </strong>
           </div>
 
           <div class="summary__item">
-            <span> Taxa anual </span>
+            <span>Taxa anual</span>
             <strong> {{ anualProfitability }}% </strong>
           </div>
 
           <div class="summary__item summary__item--highlight">
-            <span> Valor estimado </span>
+            <span>Valor estimado</span>
             <strong :title="formatCurrency(finalValue)">
               {{ formatCompactCurrency(finalValue) }}
             </strong>
