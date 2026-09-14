@@ -51,6 +51,8 @@ export function useSimulator() {
     if (interestType.value === "simple") {
       return P * (1 + rate * t);
     }
+
+    return Number.isFinite(result) ? result : Number.MAX_VALUE;
   })
 
   const profit = computed(() => {
