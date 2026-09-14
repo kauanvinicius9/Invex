@@ -67,6 +67,7 @@ const formatCompactCurrency = (value: number) => {
                 <span>Juros simples</span>
               </label>
             </div>
+
             <label for="initialValue">Valor inicial (Máx. 10.000,00)</label>
             <div class="input-wrapper">
               <span>R$</span>
@@ -157,7 +158,7 @@ const formatCompactCurrency = (value: number) => {
           initialValue: initialValue ?? 0,
           anualProfitability: anualProfitability ?? 0,
           years: years ?? 1,
-          interestType: interestType
+          interestType: interestType ?? 'compound'
       }" />
     </section>
   </main>
