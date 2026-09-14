@@ -5,6 +5,7 @@ const {
   initialValue,
   anualProfitability,
   years,
+  interestType,
   finalValue,
   profit
 } = useSimulator()
@@ -53,6 +54,19 @@ const formatCompactCurrency = (value: number) => {
 
         <div class="form">
           <div class="form__group">
+            <label>Tipo de rendimento</label>
+            <div class="radio-group">
+
+              <label class="radio-label">
+                <input type="radio" value="compound" v-model="interestType"/>
+                <span>Juros compostos</span>
+              </label>
+
+              <label class="radio-label">
+                <input type="radio" value="simple" v-model="interestType"/>
+                <span>Juros simples</span>
+              </label>
+            </div>
             <label for="initialValue">Valor inicial (Máx. 10.000,00)</label>
             <div class="input-wrapper">
               <span>R$</span>
@@ -103,6 +117,20 @@ const formatCompactCurrency = (value: number) => {
               </strong>
             </div>
 
+            <div class="result__details">
+              <div>
+                <span>Tipo de juros</span>
+                <strong>{{  interestType === "simple" ? "Juros Simples" : "Juros Compostos" }}</strong>
+              </div>
+
+              <div>
+                <span>Valor investido</span>
+                <strong :title="formatCurrency(initialValue ?? 0)">
+                  {{  formatCompactCurrency(initialValue ?? 0) }}
+                </strong>
+              </div>
+            </div>
+
             <div>
               <span>Rendimento</span>
               <strong :title="formatCurrency(profit)">
@@ -128,7 +156,8 @@ const formatCompactCurrency = (value: number) => {
       <InvestmentTable :result="{
           initialValue: initialValue ?? 0,
           anualProfitability: anualProfitability ?? 0,
-          years: years ?? 1
+          years: years ?? 1,
+          interestType: interestType
       }" />
     </section>
   </main>

@@ -234,6 +234,28 @@
   }
 }
 
+.radio-group {
+  display: flex;
+  gap: 16px;
+  margin-top: 4px;
+
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #334155;
+    cursor: pointer;
+
+    input[type="radio"] {
+      accent-color: #099e09;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+  }
+}
+
 @media (max-width: 800px) {
   .simulator {
     padding: 24px 16px;

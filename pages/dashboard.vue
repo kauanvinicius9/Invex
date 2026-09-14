@@ -5,6 +5,7 @@ const {
   initialValue,
   anualProfitability,
   years,
+  interestType,
   finalValue,
   profit
 } = useSimulator()
@@ -39,11 +40,11 @@ const chartData = computed(() => {
 
   return Array.from({ length: years.value }, (_, index) => {
     const year = index + 1
+    const rate = anualProfitability.value! / 100
 
-    const value = initialValue.value * Math.pow(
-      1 + anualProfitability.value / 100,
-      year
-    )
+    const value = interestType.value === "simple"
+      ? initialValue.value! * (1 + rate * year)
+      : initialValue.value! * Math.pow(1 + rate, year)
 
     return {
       year,
