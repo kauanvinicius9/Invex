@@ -67,7 +67,7 @@ const exportToExcel = async () => {
   const summarySheet = workbook.addWorksheet("Resumo");
   summarySheet.columns = [
     { header: "Métrica", key: "metric", width: 25 },
-    {header: "Valor", key: "value", width: 22 },
+    { header: "Valor", key: "value", width: 22 },
   ];
 
   summarySheet.getRow(1).font = { bold: true, color: { argb: "FFFFFF" } };
