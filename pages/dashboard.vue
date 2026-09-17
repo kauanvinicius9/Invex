@@ -3,6 +3,7 @@ import "./dashboard.scss";
 import GrowthChart from "../components/dashboard/GrowthChart.vue";
 import { computed } from "vue";
 import ComparisonTable from "~/components/comparison/ComparisonTable.vue";
+import Workbook from "exceljs";
 
 const { initialValue, monthlyValue, anualProfitability, years, interestType, finalValue, profit } = useSimulator();
 const { comparisonSummary, removeScenario, duplicateScenario } = useComparison();
@@ -26,7 +27,7 @@ const formatCompactCurrency = (value: number) => {
   return formatCurrency(value);
 };
 
-const simulacaoTimeline = computed(() => {
+const simulationTimeline = computed(() => {
   const p = initialValue.value ?? 0;
   const pMonthly = monthlyValue ? (monthlyValue.value ?? 0) : 0;
   const anualFee = anualProfitability.value ?? 0;
@@ -56,6 +57,76 @@ const simulacaoTimeline = computed(() => {
 
   return data;
 });
+
+// Exportação relatório em excel
+const exportToExcel = async () => {
+  if (!simulationTimeline.value.length) return;
+
+  const workbook = new Workbook();
+
+  const summarySheet = workbook.addWorksheet("Resumo");
+  summarySheet.columns = [
+    { header: "Métrica", key: "metric", width: 25 },
+    {header: "Valor", key: "value", width: 22 },
+  ];
+
+  summarySheet.getRow(1).font = { bold: true, color: { argb: "FFFFFF" } };
+  summarySheet.getRow(1).fill = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "1E3A8A" },
+  };
+
+  summarySheet.addRows([
+    { metric: "Investimento Inicial", value: initialValue.value ?? 0 },
+    { metric: "Aporte Mensal", value: monthlyValue?.value ?? 0 },
+    { metric: "Taxa Anual", value: `${anualProfitability.value ?? 0}%` },
+    { metric: "Prazo", value: `${years.value ?? 0} anos` },
+    { metric: "Tipo de Juros", value: interestType.value === "simple" ? "Simples" : "Compostos" },
+    { metric: "Rendimento Total", value: profit.value ?? 0 },
+    { metric: "Patrimônio Final", value: finalValue.value ?? 0 },
+  ]);
+
+  [2, 3, 7, 8].forEach((rowIndex) => {
+    summarySheet.getRow(rowIndex).getCell(2).numFmt = "R$ #,##0.00";
+  });
+
+  const timelineSheet = workbook.addWorksheet("Evolução Mensal");
+  timelineSheet.columns = [
+    { header: "Mês", key: "period", width: 10},
+    { header: "Total Investido", key: "totalInvested", width: 20},
+    { header: "Saldo Acumulado", key: "totalAccumulated", width: 22},
+    { header: "Rendimento do Mês", key: "interest", width: 22},
+  ];
+
+  timelineSheet.getRow(1).font = { bold: true, color: { argb: "FFFFFF" } };
+  timelineSheet.getRow(1).fill = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "1E3A8A"},
+  };
+
+  simulationTimeline.value.forEach((item) => {
+    const row = timelineSheet.addRow({
+      period: item.period,
+      totalInvested: item.totalInvested,
+      totalAccumulated: item.totalAccumulated,
+      interest: Number((item.totalAccumulated = item.totalInvested).toFixed(2)),
+    });
+
+    row.getCell(2).numFmt = "R$ #,##0.00";
+    row.getCell(3).numFmt = "R$ #,##0.00";
+    row.getCell(4).numFmt = "R$ #,##0.00";
+  });
+
+  const buffer = await workbook.xlsx.writeBuffer();
+  const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `Invex_Simulacao_${new Date().toISOString().slice(0, 10)}.xlsx`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+};
 </script>
 
 <template>
@@ -67,7 +138,12 @@ const simulacaoTimeline = computed(() => {
         <p>Acompanhe a evolução da sua simulação</p>
       </div>
 
-      <NuxtLink to="/simulator" class="dashboard__back">Nova simulação</NuxtLink>
+      <div class="dashboard__actions">
+        <button @click="exportToExcel" class="dashboard__export-btn" title="Exportar dados para Excel">
+          Exportar dados
+        </button>
+        <NuxtLink to="/simulator" class="dashboard__back">Nova simulação</NuxtLink>
+      </div>
     </header>
 
     <section class="dashboard__cards">
@@ -108,7 +184,7 @@ const simulacaoTimeline = computed(() => {
         </div>
 
         <div class="panel__chart">
-          <GrowthChart :timeline-data="simulacaoTimeline" />
+          <GrowthChart :timeline-data="simulationTimeline" />
         </div>
       </div>
 
