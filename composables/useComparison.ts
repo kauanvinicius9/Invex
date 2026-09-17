@@ -36,24 +36,14 @@ export function useComparison() {
         const secondBest = sorted[1];
         const profitDifference = secondBest ? best.totalProfit - secondBest.totalProfit : 0;
 
-        return {
-            bestScenarioId: best.input.id,
-            profitDifference: Number(profitDifference.toFixed(2)),
-            results: calculateResults.value
-        };
+        return { bestScenarioId: best.input.id, profitDifference: Number(profitDifference.toFixed(2)), results: calculateResults.value };
     });
 
     const addScenario = (scenario?: Partial<ScenarioInput>) => {
         const nextId = String(Date.now());
-        const newScenario: ScenarioInput = {
-            id: nextId,
-            name: scenario?.name || `Cenário ${scenarios.value.length + 1}`,
-            initialValue: scenario?.initialValue ?? 1000,
-            monthlyValue: scenario?.monthlyValue ?? 200,
-            anualProfitability: scenario?.anualProfitability ?? 10,
-            years: scenario?.years ?? 5,
-            interestType: scenario?.interestType || "compound"
-        };
+        const newScenario: ScenarioInput = { id: nextId, name: scenario?.name || `Cenário ${scenarios.value.length + 1}`, initialValue: 
+                                                                                scenario?.initialValue ?? 1000, monthlyValue: scenario?.monthlyValue ?? 200, anualProfitability: 
+                                                                                scenario?.anualProfitability ?? 10, years: scenario?.years ?? 5, interestType: scenario?.interestType || "compound" };
 
         scenarios.value.push(newScenario);
     };
@@ -79,13 +69,5 @@ export function useComparison() {
         }
     };
 
-    return {
-        scenarios,
-        calculateResults,
-        removeScenario,
-        comparisonSummary,
-        addScenario,
-        duplicateScenario,
-        updateScenario
-    };
+    return { scenarios, calculateResults, removeScenario, comparisonSummary, addScenario, duplicateScenario, updateScenario };
 }

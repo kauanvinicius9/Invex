@@ -19,11 +19,7 @@ const rows = computed(() => {
 
   return Array.from({ length: props.result.years + 1}, (_, year) => {
     const value = props.result.initialValue * Math.pow(1 + props.result.anualProfitability / 100, year)
-    return {
-      year,
-      value,
-      profit: value - props.result.initialValue
-    }
+    return { year, value, profit: value - props.result.initialValue}
   })
 })
 </script>
@@ -33,7 +29,6 @@ const rows = computed(() => {
     <div class="investment-table__header">
       <div>
         <h2>Projeção do investimento</h2>
-
         <p>
           Veja como o seu patrimônio pode evoluir ao longo dos anos
         </p>
