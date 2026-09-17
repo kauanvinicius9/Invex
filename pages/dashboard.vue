@@ -4,21 +4,8 @@ import GrowthChart from "../components/dashboard/GrowthChart.vue";
 import { computed } from "vue";
 import ComparisonTable from "~/components/comparison/ComparisonTable.vue";
 
-const {
-  initialValue,
-  monthlyValue,
-  anualProfitability,
-  years,
-  interestType,
-  finalValue,
-  profit
-} = useSimulator();
-
-const {
-  comparisonSummary,
-  removeScenario,
-  duplicateScenario
-} = useComparison();
+const { initialValue, monthlyValue, anualProfitability, years, interestType, finalValue, profit } = useSimulator();
+const { comparisonSummary, removeScenario, duplicateScenario } = useComparison();
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat("pt-BR", {
@@ -41,37 +28,33 @@ const formatCompactCurrency = (value: number) => {
 
 const simulacaoTimeline = computed(() => {
   const p = initialValue.value ?? 0;
-  const pMensal = monthlyValue ? (monthlyValue.value ?? 0) : 0;
-  const taxaAnual = anualProfitability.value ?? 0;
-  const totalAnos = years.value ?? 0;
+  const pMonthly = monthlyValue ? (monthlyValue.value ?? 0) : 0;
+  const anualFee = anualProfitability.value ?? 0;
+  const totalYears = years.value ?? 0;
 
-  if (p === 0 || totalAnos === 0) return [];
+  if (p === 0 || totalYears === 0) return [];
 
-  const taxaMensal = Math.pow(1 + taxaAnual / 100, 1 / 12) - 1;
-  const totalMeses = totalAnos * 12;
+  const monthlyFee = Math.pow(1 + anualFee / 100, 1 / 12) - 1;
+  const totalMonth = totalYears * 12;
 
-  let montante = p;
-  let investido = p;
+  let amount = p;
+  let invested = p;
 
-  const dados = [];
+  const data = [];
 
-  for (let mes = 1; mes <= totalMeses; mes++) {
+  for (let month = 1; month <= totalMonth; month++) {
     if (interestType.value === "simple") {
-      investido += pMensal;
-      montante = p + (p * (taxaAnual / 100) * (mes / 12)) + (investido - p);
+      invested += pMonthly;
+      amount = p + (p * (anualFee / 100) * (month / 12)) + (invested - p);
     } else {
-      montante = (montante + pMensal) * (1 + taxaMensal);
-      investido += pMensal;
+      amount = (amount + pMonthly) * (1 + monthlyFee);
+      invested += pMonthly;
     }
 
-    dados.push({
-      periodo: mes,
-      totalInvestido: Number(investido.toFixed(2)),
-      totalAcumulado: Number(montante.toFixed(2))
-    });
+    data.push({ period: month, totalInvested: Number(invested.toFixed(2)), totalAccumulated: Number(amount.toFixed(2)) });
   }
 
-  return dados;
+  return data;
 });
 </script>
 

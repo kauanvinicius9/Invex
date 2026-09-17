@@ -1,14 +1,7 @@
 <script setup lang="ts">
 import "./simulator.scss"
 
-const {
-  initialValue,
-  anualProfitability,
-  years,
-  interestType,
-  finalValue,
-  profit
-} = useSimulator()
+const { initialValue, anualProfitability, years, interestType, finalValue, profit } = useSimulator()
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat("pt-BR", {
@@ -154,12 +147,7 @@ const formatCompactCurrency = (value: number) => {
     </section>
 
     <section class="simulator__table-section">
-      <InvestmentTable :result="{
-          initialValue: initialValue ?? 0,
-          anualProfitability: anualProfitability ?? 0,
-          years: years ?? 1,
-          interestType: interestType ?? 'compound'
-      }" />
+      <InvestmentTable :result="{ initialValue: initialValue ?? 0, anualProfitability: anualProfitability ?? 0, years: years ?? 1, interestType: interestType ?? 'compound'}" />
     </section>
   </main>
 

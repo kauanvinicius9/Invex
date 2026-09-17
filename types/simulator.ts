@@ -11,9 +11,9 @@ export interface ScenarioInput {
 }
 
 export interface TimelinePoint {
-    periodo: number;
-    totalInvestido: number;
-    totalAcumulado: number;
+    period: number;
+    totalInvested: number;
+    totalAccumulated: number;
 }
 
 export interface ScenarioResult {

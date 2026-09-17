@@ -11,7 +11,6 @@ export function useSimulator() {
   const years = useState<number | null>("years", () => null);
 
   const interestType = useState<InterestType>("interestType", () => "compound");
-
   const investment = computed<Investment | null>(() => {
     if (
       initialValue.value === null ||
@@ -21,13 +20,8 @@ export function useSimulator() {
       return null;
     }
 
-    return {
-      initialValue: initialValue.value,
-      monthlyValue: monthlyValue.value ?? 0,
-      anualProfitability: anualProfitability.value,
-      years: years.value,
-      interestType: interestType.value
-    };
+    return { initialValue: initialValue.value, monthlyValue: monthlyValue.value ?? 0, anualProfitability: 
+                  anualProfitability.value, years: years.value, interestType: interestType.value };
   });
 
   const result = computed(() => {
@@ -78,15 +72,5 @@ export function useSimulator() {
     return Math.max(0, finalValue.value - totalInvestido);
   });
 
-  return {
-    initialValue,
-    monthlyValue,
-    anualProfitability,
-    years,
-    interestType,
-    investment,
-    result,
-    finalValue,
-    profit
-  };
+  return { initialValue, monthlyValue, anualProfitability, years, interestType, investment, result, finalValue, profit };
 }

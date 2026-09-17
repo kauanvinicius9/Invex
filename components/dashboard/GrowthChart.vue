@@ -4,21 +4,12 @@ import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, LinearScale, Poi
 import { Line } from "vue-chartjs";
 import type { ScenarioResult } from "~/types/simulator";
 
-ChartJS.register(
-  Title,
-  Tooltip,
-  Legend,
-  LineElement,
-  LinearScale,
-  PointElement,
-  CategoryScale,
-  Filler
-);
+ChartJS.register( Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale, Filler );
 
 interface SimpleTimelinePoint {
-  periodo: number | string;
-  totalInvestido: number;
-  totalAcumulado: number;
+  period: number | string;
+  totalInvested: number;
+  totalAccumulated: number;
 }
 
 const props = defineProps<{
@@ -41,31 +32,23 @@ const chartData = computed(() => {
 
     const datasets = props.results.map((res, index) => {
       const color = COLOR_PALETTE[index % COLOR_PALETTE.length];
-      return {
-        label: res.input.name,
-        data: res.timeline.map((t) => t.totalAcumulado),
-        borderColor: color.border,
-        backgroundColor: color.bg,
-        fill: false,
-        tension: 0.3,
-        pointRadius: 2
-      };
+      return { label: res.input.name, data: res.timeline.map((t) => t.totalAccumulated), borderColor: color.border, backgroundColor: color.bg, fill: false, tension: 0.3, pointRadius: 2 };
     });
 
     return { labels, datasets };
   }
 
   if (props.timelineData && props.timelineData.length > 0) {
-    const labels = props.timelineData.map((d) => `Mês ${d.periodo}`);
-    const investido = props.timelineData.map((d) => d.totalInvestido);
-    const acumulado = props.timelineData.map((d) => d.totalAcumulado);
+    const labels = props.timelineData.map((d) => `Mês ${d.period}`);
+    const invested = props.timelineData.map((d) => d.totalInvested);
+    const accumuled = props.timelineData.map((d) => d.totalAccumuled);
 
     return {
       labels,
       datasets: [
         {
           label: "Valor Total (com Juros)",
-          data: acumulado,
+          data: accumuled,
           borderColor: "#10B981",
           backgroundColor: "rgba(16, 185, 129, 0.1)",
           fill: true,
@@ -74,7 +57,7 @@ const chartData = computed(() => {
         },
         {
           label: "Total Investido",
-          data: investido,
+          data: invested,
           borderColor: "#3B82F6",
           backgroundColor: "rgba(59, 130, 246, 0.05)",
           fill: true,
@@ -95,11 +78,13 @@ const chartOptions = {
     mode: "index" as const,
     intersect: false
   },
+
   plugins: {
     legend: {
       position: "top" as const,
       labels: { font: { family: "Inter, sans-serif", size: 12 } }
     },
+
     tooltip: {
       callbacks: {
         label: (context: any) => {
@@ -112,6 +97,7 @@ const chartOptions = {
       }
     }
   },
+
   scales: {
     y: {
       ticks: {
