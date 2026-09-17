@@ -5,7 +5,7 @@ import { calculateScenario } from "../utils/comparisonCalculations";
 export function useComparison() {
     const scenarios = useState<ScenarioInput[]>("comparisonScenarios", () => [
         {
-            id: "1",
+            id: 1,
             name: "Cenário Conservador (CDB 100% CDI)",
             initialValue: 5000,
             monthlyValue: 500,
@@ -14,7 +14,7 @@ export function useComparison() {
             interestType: "compound"
         },
         {
-            id: "2",
+            id: 2,
             name: "Cenário Moderado (Ações & FIIs)",
             initialValue: 5000,
             monthlyValue: 500,

@@ -1,7 +1,7 @@
 export type InterestType = "compound" | "simple";
 
 export interface ScenarioInput {
-    id: string;
+    id: number;
     name: string;
     initialValue: number;
     monthlyValue: number;
