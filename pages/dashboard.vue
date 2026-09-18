@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import "./dashboard.scss";
 import GrowthChart from "../components/dashboard/GrowthChart.vue";
-import { computed } from "vue";
 import ComparisonTable from "~/components/comparison/ComparisonTable.vue";
-import Workbook from "exceljs";
+import { computed } from "vue";
 
 const { initialValue, monthlyValue, anualProfitability, years, interestType, finalValue, profit } = useSimulator();
 const { comparisonSummary, removeScenario, duplicateScenario } = useComparison();
@@ -47,6 +46,7 @@ const simulationTimeline = computed(() => {
     if (interestType.value === "simple") {
       invested += pMonthly;
       amount = p + (p * (anualFee / 100) * (month / 12)) + (invested - p);
+
     } else {
       amount = (amount + pMonthly) * (1 + monthlyFee);
       invested += pMonthly;
@@ -62,7 +62,8 @@ const simulationTimeline = computed(() => {
 const exportToExcel = async () => {
   if (!simulationTimeline.value.length) return;
 
-  const workbook = new Workbook();
+  const { default: ExcelJS } = await import("exceljs");
+  const workbook = new ExcelJS. Workbook();
 
   const summarySheet = workbook.addWorksheet("Resumo");
   summarySheet.columns = [
@@ -71,11 +72,7 @@ const exportToExcel = async () => {
   ];
 
   summarySheet.getRow(1).font = { bold: true, color: { argb: "FFFFFF" } };
-  summarySheet.getRow(1).fill = {
-    type: "pattern",
-    pattern: "solid",
-    fgColor: { argb: "1E3A8A" },
-  };
+  summarySheet.getRow(1).fill = { type: "pattern", pattern: "solid", fgColor: { argb: "1E3A8A" } };
 
   summarySheet.addRows([
     { metric: "Investimento Inicial", value: initialValue.value ?? 0 },
@@ -100,19 +97,11 @@ const exportToExcel = async () => {
   ];
 
   timelineSheet.getRow(1).font = { bold: true, color: { argb: "FFFFFF" } };
-  timelineSheet.getRow(1).fill = {
-    type: "pattern",
-    pattern: "solid",
-    fgColor: { argb: "1E3A8A"},
-  };
+  timelineSheet.getRow(1).fill = { type: "pattern", pattern: "solid", fgColor: { argb: "1E3A8A"} };
 
   simulationTimeline.value.forEach((item) => {
-    const row = timelineSheet.addRow({
-      period: item.period,
-      totalInvested: item.totalInvested,
-      totalAccumulated: item.totalAccumulated,
-      interest: Number((item.totalAccumulated = item.totalInvested).toFixed(2)),
-    });
+    const row = timelineSheet.addRow({ period: item.period, totalInvested: item.totalInvested, totalAccumulated: 
+                                                                        item.totalAccumulated, interest: Number((item.totalAccumulated - item.totalInvested).toFixed(2)) });
 
     row.getCell(2).numFmt = "R$ #,##0.00";
     row.getCell(3).numFmt = "R$ #,##0.00";
@@ -122,10 +111,12 @@ const exportToExcel = async () => {
   const buffer = await workbook.xlsx.writeBuffer();
   const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
   const link = document.createElement("a");
+
   link.href = URL.createObjectURL(blob);
   link.download = `Invex_Simulacao_${new Date().toISOString().slice(0, 10)}.xlsx`;
   link.click();
-  URL.revokeObjectURL(link.href);
+
+  setTimeout(() =>URL.revokeObjectURL(link.href), 100);
 };
 </script>
 
@@ -139,7 +130,7 @@ const exportToExcel = async () => {
       </div>
 
       <div class="dashboard__actions">
-        <button @click="exportToExcel" class="dashboard__export-btn" title="Exportar dados para Excel">
+        <button @click="exportToExcel" class="dashboard__export-btn" title="Exportar dados para Excel .xlsx">
           Exportar dados
         </button>
         <NuxtLink to="/simulator" class="dashboard__back">Nova simulação</NuxtLink>

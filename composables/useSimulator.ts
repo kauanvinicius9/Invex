@@ -9,8 +9,8 @@ export function useSimulator() {
   const monthlyValue = useState<number | null>("monthlyValue", () => null);
   const anualProfitability = useState<number | null>("anualProfitability", () => null);
   const years = useState<number | null>("years", () => null);
-
   const interestType = useState<InterestType>("interestType", () => "compound");
+
   const investment = computed<Investment | null>(() => {
     if (
       initialValue.value === null ||
@@ -25,42 +25,38 @@ export function useSimulator() {
   });
 
   const result = computed(() => {
-    if (!investment.value) {
-      return null;
-    }
-    return calculateInvestment(investment.value);
+    if (!investment.value) return null;
+      return calculateInvestment(investment.value);
   });
 
   const finalValue = computed(() => {
-    if (
-      initialValue.value === null ||
-      anualProfitability.value === null ||
-      years.value === null
-    ) {
-      return 0;
+    if (!investment.value) return 0;
+
+    if (result.value && typeof result.value === "object" && "finalvalue" in result.value) {
+      return result.value.finalValue;
     }
 
-    if (result.value !== null) {
+    const P = initialValue.value ?? 0;
+    const PMT = monthlyValue.value ?? 0;
+    const anualRate = (anualProfitability.value ?? 0) / 100;
+    const totalMonths = (years.value ?? 0) * 12;
 
-      if (typeof result.value === "object" && "finalValue" in result.value) {
-        return result.value.finalValue;
-      }
-
-      if (typeof result.value === "number") {
-        return result.value;
-      }
-    }
-
-    const P = initialValue.value;
-    const rate = anualProfitability.value / 100;
-    const t = years.value;
+    if (totalMonths === 0) return P;
 
     if (interestType.value === "simple") {
-      return P * (1 + rate * t);
+      const initialInterest = P * anualRate * (years.value ?? 0);
+      const totalPMT = PMT * totalMonths;
+      const pmtInterest = PMT * (anualRate / 12) * ((totalMonths * (totalMonths + 1)) / 2);
+
+      return P + initialInterest + totalPMT + pmtInterest;
     }
 
-    const calculatedCompound = P * Math.pow(1 + rate, t);
-    return Number.isFinite(calculatedCompound) ? calculatedCompound : 0;
+    const i = Math.pow(1 + anualRate, 1 / 12) - 1;
+    const compoundInitial = P * Math.pow(1 + i, totalMonths);
+    const compoundPMT = i > 0 ? PMT * ((Math.pow(1 + i, totalMonths) - 1) / 1) : PMT * totalMonths;
+    const total = compoundInitial + compoundPMT;
+
+    return Number.isFinite(total) ? Number(total.toFixed(2)) : 0;
   });
 
   const profit = computed(() => {
@@ -68,8 +64,8 @@ export function useSimulator() {
       return 0;
     }
 
-    const totalInvestido = initialValue.value + ((monthlyValue.value ?? 0) * (years.value ?? 0) * 12);
-    return Math.max(0, finalValue.value - totalInvestido);
+    const totalInvested = (initialValue.value ?? 0) + ((monthlyValue.value ?? 0) * (years.value ?? 0) * 12);
+    return Math.max(0, finalValue.value - totalInvested);
   });
 
   return { initialValue, monthlyValue, anualProfitability, years, interestType, investment, result, finalValue, profit };

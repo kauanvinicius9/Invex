@@ -4,7 +4,9 @@
   background: #ffffff;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
-  padding: 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
 
   &__banner {
     background-color: #ecfdf5;
