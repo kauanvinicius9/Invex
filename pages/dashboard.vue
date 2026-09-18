@@ -147,7 +147,9 @@ const exportToExcel = async () => {
 
       <div class="card">
         <span class="card__label">Rentabilidade anual</span>
-        <strong class="card__value">{{ anualProfitability }}%</strong>
+        <strong class="card__value">
+          {{ anualProfitability ?? 0  }}%
+        </strong>
       </div>
 
       <div class="card">
@@ -170,7 +172,7 @@ const exportToExcel = async () => {
         <div class="panel__header">
           <div>
             <h2>Evolução do investimento</h2>
-            <p>Projeção para {{ years }} anos ({{ interestType === "simple" ? "Juros simples" : "Juros compostos" }})</p>
+            <p>Projeção para {{ years ?? 0 }} anos ({{ interestType === "simple" ? "Juros simples" : "Juros compostos" }})</p>
           </div>
         </div>
 
@@ -207,7 +209,7 @@ const exportToExcel = async () => {
 
           <div class="summary__item">
             <span>Taxa anual</span>
-            <strong>{{ anualProfitability }}%</strong>
+            <strong>{{ anualProfitability ?? 0  }}%</strong>
           </div>
 
           <div class="summary__item summary__item--highlight">
