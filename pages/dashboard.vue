@@ -130,7 +130,7 @@ const exportToExcel = async () => {
       </div>
 
       <div class="dashboard__actions">
-        <button @click="exportToExcel" class="dashboard__export-btn" title="Exportar dados para Excel .xlsx">
+        <button @click="exportToExcel" class="dashboard__export-btn" title="Exportar dados para Excel .xlsx" :disabled="!simulationTimeline.length">
           Exportar dados
         </button>
         <NuxtLink to="/simulator" class="dashboard__back">Nova simulação</NuxtLink>
