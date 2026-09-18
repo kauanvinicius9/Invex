@@ -116,13 +116,6 @@ const formatCompactCurrency = (value: number) => {
                 <span>Tipo de juros</span>
                 <strong>{{  interestType === "simple" ? "Juros Simples" : "Juros Compostos" }}</strong>
               </div>
-
-              <div>
-                <span>Valor investido</span>
-                <strong :title="formatCurrency(initialValue ?? 0)">
-                  {{  formatCompactCurrency(initialValue ?? 0) }}
-                </strong>
-              </div>
             </div>
 
             <div>
