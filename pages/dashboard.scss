@@ -66,13 +66,14 @@
         font-size: 1rem;
         border-radius: 8px;
         background: #f5f7fb;
-        border: 2px solid #008000;
-        color: #008000;
+        border: 2px solid #099e09;
+        color: #099e09;
         cursor: pointer;
         transition: 0.3s ease;
 
         &:hover {
             background: #008000;
+            border: #008000;
             color: #fff;
         }
     }
