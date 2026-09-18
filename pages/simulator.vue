@@ -42,7 +42,7 @@ const formatCompactCurrency = (value: number) => {
       <div class="panel">
         <div class="panel__header">
           <h2>Dados da simulação</h2>
-          <p>Informe os valores do investimento.</p>
+          <p>Informe os valores do investimento</p>
         </div>
 
         <div class="form">
