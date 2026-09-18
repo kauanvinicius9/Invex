@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import "./dashboard.scss";
 import GrowthChart from "../components/dashboard/GrowthChart.vue";
+import DistributionChart from "../components/dashboard/DistributionChart.vue";
 import ComparisonTable from "~/components/comparison/ComparisonTable.vue";
 import { computed } from "vue";
 
@@ -178,6 +179,17 @@ const exportToExcel = async () => {
 
         <div class="panel__chart">
           <GrowthChart :timeline-data="simulationTimeline" />
+        </div>
+
+      <div class="panel">
+        <div class="panel__header">
+          <div>
+            <h2>Composição do Patrimônio</h2>
+            <p>Investido vs. Rendimento</p>
+          </div>
+
+        </div>
+        <DistributionChart :total-invested="(initialValue ?? 0) + ((monthlyValue ?? 0) * (years ?? 0) * 12)"/>
         </div>
       </div>
 
