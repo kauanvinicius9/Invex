@@ -32,7 +32,8 @@ const chartData = computed(() => {
 
     const datasets = props.results.map((res, index) => {
       const color = COLOR_PALETTE[index % COLOR_PALETTE.length];
-      return { label: res.input.name, data: res.timeline.map((t) => t.totalAccumulated), borderColor: color.border, backgroundColor: color.bg, fill: false, tension: 0.3, pointRadius: 2 };
+      return { label: res.input.name, data: res.timeline.map((t) => t.totalAccumulated), borderColor: 
+                    color.border, backgroundColor: color.bg, fill: false, tension: 0.3, pointRadius: 2 };
     });
 
     return { labels, datasets };
@@ -41,7 +42,7 @@ const chartData = computed(() => {
   if (props.timelineData && props.timelineData.length > 0) {
     const labels = props.timelineData.map((d) => `Mês ${d.period}`);
     const invested = props.timelineData.map((d) => d.totalInvested);
-    const accumuled = props.timelineData.map((d) => d.totalAccumuled);
+    const accumuled = props.timelineData.map((d) => d.totalAccumulated);
 
     return {
       labels,

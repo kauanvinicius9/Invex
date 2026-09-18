@@ -73,7 +73,7 @@ const formatCompactCurrency = (value: number) => {
             <label for="anualProfitability">Rentabilidade anual (Máx. 100)</label>
             <div class="input-wrapper">
               <input id="anualProfitability" type="number" min="0" max="100" v-model.number="anualProfitability" step="0.1"
-                @input="anualProfitability = anualProfitability === null ? null : Math.floor(Math.min(100, Math.max(0, anualProfitability)))"/>
+                @input="anualProfitability = anualProfitability === null ? null : (Math.min(100, Math.max(0, anualProfitability)))"/>
               <span>%</span>
             </div>
           </div>

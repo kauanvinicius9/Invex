@@ -9,6 +9,7 @@
 
 .dashboard {
     min-height: 100vh;
+    min-width: 0;
     padding: 40px;
     background: #f5f7fb;
     color: #1e293b;
@@ -62,8 +63,9 @@
 
     &__export-btn {
         padding: 12px 18px;
+        font-size: 1rem;
         border-radius: 8px;
-        background: #fff;
+        background: #f5f7fb;
         border: 2px solid #008000;
         color: #008000;
         cursor: pointer;
@@ -94,6 +96,10 @@
 
     &__comparison {
         margin-top: 20px;
+        max-width: 1200px;
+        margin: 20px auto 0;
+        width: 100%;
+        min-width: 0;
     }
 }
 

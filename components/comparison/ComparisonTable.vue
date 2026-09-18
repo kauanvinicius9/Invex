@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import "./ComparisonTable.scss";
-import type { ComparisonSummary, ScenarioResult } from "~/types/simulator";
+import type { ComparisonSummary } from "~/types/simulator";
 
 const props = defineProps<{
     summary: ComparisonSummary | null;
 }>();
 
 const emit = defineEmits<{
-    (e: "duplicate", id: string): void;
-    (e: "remove", id: string): void;
+    duplicate: [íd: string];
+    remove: [id: string];
 }>();
 
-const formatCurrency = (val: number) => {
+const formatCurrency = (val: number | null  | undefined) => {
+  if (val === null || val === undefined || isNaN(val)) return "R$ 0,00";
     return new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
