@@ -2,6 +2,7 @@ import { useState, computed } from "#imports";
 import type { ScenarioInput, ScenarioResult, ComparisonSummary } from "../types/simulator";
 import { calculateScenario } from "../utils/comparisonCalculations";
 
+// Comparações
 export function useComparison() {
     const scenarios = useState<ScenarioInput[]>("comparisonScenarios", () => [
         {
@@ -39,6 +40,7 @@ export function useComparison() {
         return { bestScenarioId: best.input.id, profitDifference: Number(profitDifference.toFixed(2)), results: calculateResults.value };
     });
 
+    // Adicionar cenário
     const addScenario = (scenario?: Partial<ScenarioInput>) => {
         const nextId = String(Date.now());
         const newScenario: ScenarioInput = { id: nextId, name: scenario?.name || `Cenário ${scenarios.value.length + 1}`, initialValue: 
@@ -48,10 +50,12 @@ export function useComparison() {
         scenarios.value.push(newScenario);
     };
 
+    // Remover cenário
     const removeScenario = (id: string) => {
         scenarios.value = scenarios.value.filter((s) => s.id !== id);
     };
 
+    // Duplicar cenário salvando como cópia
     const duplicateScenario = (id: string) => {
         const target = scenarios.value.find((s) => s.id === id);
         if (target) {

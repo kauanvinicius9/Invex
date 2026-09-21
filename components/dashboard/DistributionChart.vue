@@ -5,6 +5,7 @@ import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale, ty
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
 
+// Dashboard interativo
 const props = defineProps<{
     totalInvested: number;
     totalProfit: number;
@@ -14,6 +15,7 @@ const formatCurrency = (val: number) => {
     return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL"}).format(val);
 };
 
+// Aplicação do Chart JS
 const chartData = computed<ChartData<"pie">>(() => ({
     labels: ["Total Investido", "Rendimentos"],
     datasets: [

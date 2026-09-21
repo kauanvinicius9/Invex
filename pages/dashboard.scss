@@ -80,6 +80,8 @@
         &:disabled {
             opacity: 0.4;
             cursor: not-allowed;
+            color: #727171;
+            border-color: #727171;
         }
     }
 

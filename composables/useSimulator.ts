@@ -2,6 +2,7 @@ import type { Investment } from "../types/investments";
 import { calculateInvestment } from "../utils/calculations";
 import { computed } from "vue";
 
+// Aplicação de juros simples e compostos
 export type InterestType = "compound" | "simple";
 
 export function useSimulator() {
@@ -51,6 +52,7 @@ export function useSimulator() {
       return P + initialInterest + totalPMT + pmtInterest;
     }
 
+    // Compostos
     const i = Math.pow(1 + anualRate, 1 / 12) - 1;
     const compoundInitial = P * Math.pow(1 + i, totalMonths);
     const compoundPMT = i > 0 ? PMT * ((Math.pow(1 + i, totalMonths) - 1) / 1) : PMT * totalMonths;

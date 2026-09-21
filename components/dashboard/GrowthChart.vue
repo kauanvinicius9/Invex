@@ -17,6 +17,7 @@ const props = defineProps<{
   timelineData?: SimpleTimelinePoint[];
 }>();
 
+// Cores
 const COLOR_PALETTE = [
   { border: "#10B981", bg: "rgba(16, 185, 129, 0.1)" },
   { border: "#3B82F6", bg: "rgba(59, 130, 246, 0.1)" },
@@ -25,6 +26,7 @@ const COLOR_PALETTE = [
   { border: "#EF4444", bg: "rgba(239, 68, 68, 0.1)" }
 ];
 
+// Aplicação do Chart JS
 const chartData = computed(() => {
   if (props.results && props.results.length > 0) {
     const maxMonths = Math.max(...props.results.map((r) => r.timeline.length));
