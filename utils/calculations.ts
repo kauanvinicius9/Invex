@@ -1,5 +1,7 @@
 import type { Investment, InvestmentResult } from "../types/investments";
 
+// Base dos cálculos
+
 export function calculateInvestment(
   investment: Investment
 ): InvestmentResult {

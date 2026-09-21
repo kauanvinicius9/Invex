@@ -8,6 +8,7 @@ import { computed } from "vue";
 const { initialValue, monthlyValue, anualProfitability, years, interestType, finalValue, profit } = useSimulator();
 const { comparisonSummary, removeScenario, duplicateScenario } = useComparison();
 
+// Formatação em real
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat("pt-BR", {
     style: "currency",
@@ -15,6 +16,7 @@ const formatCurrency = (value: number) => {
   }).format(value);
 };
 
+// Formatação em real compacto
 const formatCompactCurrency = (value: number) => {
   if (value >= 1e9) {
     return new Intl.NumberFormat("pt-BR", {

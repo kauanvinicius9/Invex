@@ -50,12 +50,10 @@
   &__buttons {
     display: flex;
     gap: 10px;
-    flex-shrink: 0;
   }
 
   &__back {
     display: flex;
-    width: auto;
     padding: 14px 19px;
     border-radius: 8px;
     background: #099e09;
@@ -71,7 +69,6 @@
 
   &__dashboard {
     display: flex;
-    width: auto;
     padding: 12px 18px;
     border-radius: 8px;
     background: #f5f7fb;
@@ -278,6 +275,20 @@
 @media (max-width: 500px) {
   .panel {
     padding: 18px;
+  }
+
+  .simulator {
+    &__buttons {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      a, button, &__back, &__dashboard {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+    }
   }
 
   .result {

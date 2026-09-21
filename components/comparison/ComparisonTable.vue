@@ -2,6 +2,7 @@
 import "./ComparisonTable.scss";
 import type { ComparisonSummary } from "~/types/simulator";
 
+// Tabela de comparações
 const props = defineProps<{
     summary: ComparisonSummary | null;
 }>();

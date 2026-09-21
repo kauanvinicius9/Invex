@@ -1,5 +1,7 @@
 import type { ScenarioInput, ScenarioResult, TimelinePoint } from "../types/simulator";
 
+//  Base das comparações
+
 export function calculateScenario(input: ScenarioInput): ScenarioResult {
     const { initialValue, monthlyValue, anualProfitability, years, interestType } = input;
 
