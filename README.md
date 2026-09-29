@@ -10,10 +10,8 @@ npm install exceljs
 
 ```bash
 npm install chartjs vue-chartjs
-
-
-
-
-
-
 ```
+
+
+
+
