@@ -18,7 +18,7 @@ const props = defineProps<{
 }>();
 
 // Cores
-const COLOR_PALETTE = [
+const colors = [
   { border: "#10B981", bg: "rgba(16, 185, 129, 0.1)" },
   { border: "#3B82F6", bg: "rgba(59, 130, 246, 0.1)" },
   { border: "#8B5CF6", bg: "rgba(139, 92, 246, 0.1)" },
@@ -33,7 +33,7 @@ const chartData = computed(() => {
     const labels = Array.from({ length: maxMonths }, (_, i) => `Mês ${i + 1}`);
 
     const datasets = props.results.map((res, index) => {
-      const color = COLOR_PALETTE[index % COLOR_PALETTE.length];
+      const color = colors[index % colors.length];
       return { label: res.input.name, data: res.timeline.map((t) => t.totalAccumulated), borderColor: 
                     color.border, backgroundColor: color.bg, fill: false, tension: 0.3, pointRadius: 2 };
     });
