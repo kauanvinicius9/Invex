@@ -99,7 +99,7 @@ Located in `utils/`, these files contain pure math functions with no Vue/Nuxt de
 1. **Clone the repository and access the folder:**
    
    ```bash
-   cd Invex-main
+   cd Invex
    ```
 
 3. **Install dependencies:**
